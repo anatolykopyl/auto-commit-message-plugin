@@ -1,5 +1,5 @@
 # Git commit template Plugin for IntelliJ
-
+<!-- Plugin description -->
 This plugin allows to create a commit message with the following template:
 
 ```
@@ -8,7 +8,11 @@ This plugin allows to create a commit message with the following template:
 <body>
 <BLANK LINE>
 <footer>
+<BLANK LINE>
+<jira id>
 ```
+
+<!-- Plugin description end -->
 
 From the contribution guidelines of the Angular project [here](https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#commit-message-format).
 
@@ -46,3 +50,4 @@ This plugin is based off the [Git Commit Template](https://github.com/MobileTrib
 ### Changes made:
 
 * Refactored to use standard Gradle project structure
+* Added option in commit dialog to automatically detect Jira ID(s) from the branch name, or to use fixed Jira IDs

@@ -16,8 +16,9 @@ public class CommitMessage {
 
     public static final Pattern COMMIT_FIRST_LINE_FORMAT = Pattern.compile("^([a-z]+)(\\((.+)\\))?: (.+)");
     public static final Pattern COMMIT_CLOSES_FORMAT = Pattern.compile("Closes (.+)");
+    public static final Pattern JIRA_ID_FORMAT = Pattern.compile("\\[(\\w+[_-]\\d+)]");
 
-    private ChangeType changeType = ChangeType.FIX;
+    private ChangeType changeType = ChangeType.FEAT;
     private String changeScope = "";
     private String shortDescription = "";
     private String longDescription = "";
@@ -25,6 +26,8 @@ public class CommitMessage {
     private String closedIssues = "";
     private boolean wrapText = true;
     private boolean skipCI = false;
+    private String jiraId = null;
+    private JiraIdMode jiraIdMode = JiraIdMode.AUTODETECT;
 
     private CommitMessage() {
         this.longDescription = "";
@@ -33,7 +36,9 @@ public class CommitMessage {
     }
 
     public CommitMessage(ChangeType changeType, String changeScope, String shortDescription, String longDescription,
-                         String breakingChanges, String closedIssues, boolean wrapText, boolean skipCI) {
+                         String breakingChanges, String closedIssues, boolean wrapText, boolean skipCI,
+                         JiraIdMode jiraIdMode, String jiraId
+    ) {
         this.changeType = changeType;
         this.changeScope = changeScope;
         this.shortDescription = shortDescription;
@@ -42,6 +47,8 @@ public class CommitMessage {
         this.closedIssues = closedIssues;
         this.wrapText = wrapText;
         this.skipCI = skipCI;
+        this.jiraIdMode = jiraIdMode;
+        this.jiraId = jiraId;
     }
 
     @Override
@@ -91,7 +98,26 @@ public class CommitMessage {
                     .append("[skip ci]");
         }
 
+        if (isNotBlank(jiraId)) {
+            String jiraIdText = formatJiraIds(jiraId);
+            builder
+                    .append(System.lineSeparator())
+                    .append(System.lineSeparator())
+                    .append(jiraIdText);
+        }
+
         return builder.toString();
+    }
+
+    private String formatJiraIds(String jiraId) {
+        String[] ids = jiraId.split("[\\s,]+");
+        for (int i = 0; i < ids.length; i++) {
+            String idText = ids[i];
+            if (!idText.startsWith("[") || !idText.endsWith("]")) {
+                ids[i] = '[' + idText + ']';
+            }
+        }
+        return String.join(" ", ids);
     }
 
     private String formatClosedIssue(String closedIssue) {
@@ -115,11 +141,24 @@ public class CommitMessage {
 
             int pos = 1;
             StringBuilder stringBuilder;
+            StringBuilder jiraIdStringBuilder = new StringBuilder();
 
             stringBuilder = new StringBuilder();
             for (; pos < strings.length; pos++) {
                 String lineString = strings[pos];
                 if (lineString.startsWith("BREAKING") || lineString.startsWith("Closes") || lineString.equalsIgnoreCase("[skip ci]")) break;
+
+                matcher = JIRA_ID_FORMAT.matcher(lineString);
+                int matchTotal = 0;
+                while (matcher.find()) {
+                    jiraIdStringBuilder.append(matcher.group(1));
+                    jiraIdStringBuilder.append(' ');
+                    int matchStart = matcher.start(0);
+                    int matchEnd = matcher.end(0);
+                    lineString = lineString.substring(0, matchStart - matchTotal) + lineString.substring(matchEnd - matchTotal);
+                    matchTotal += matchEnd - matchStart;
+                }
+
                 stringBuilder.append(lineString).append('\n');
             }
             commitMessage.longDescription = stringBuilder.toString().trim();
@@ -139,6 +178,8 @@ public class CommitMessage {
             }
             if (stringBuilder.length() > 0) stringBuilder.delete(stringBuilder.length() - 1, stringBuilder.length());
             commitMessage.closedIssues = stringBuilder.toString();
+
+            commitMessage.jiraId = jiraIdStringBuilder.toString();
 
             commitMessage.skipCI = message.contains("[skip ci]");
         } catch (RuntimeException e) {}
@@ -173,4 +214,8 @@ public class CommitMessage {
     public boolean isSkipCI() {
         return skipCI;
     }
+
+    public String getJiraId() { return jiraId; }
+
+    public JiraIdMode getJiraIdMode() { return jiraIdMode; }
 }
