@@ -2,21 +2,21 @@ package com.leroymerlin.commit;
 
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.vcs.CheckinProjectPanel;
 import com.intellij.openapi.vcs.CommitMessageI;
 import com.intellij.openapi.vcs.VcsDataKeys;
 import com.intellij.openapi.vcs.ui.Refreshable;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Damien Arrachequesne
  */
-public class CreateCommitAction extends AnAction implements DumbAware {
+public class CreateCommitAction extends AnAction {
 
     @Override
-    public void actionPerformed(AnActionEvent actionEvent) {
+    public void actionPerformed(@NotNull AnActionEvent actionEvent) {
         CommitMessageI commitPanel = getCommitPanel(actionEvent);
         if (commitPanel == null) return;
 
@@ -47,5 +47,6 @@ public class CreateCommitAction extends AnAction implements DumbAware {
             return (CommitMessageI) data;
         }
         return VcsDataKeys.COMMIT_MESSAGE_CONTROL.getData(e.getDataContext());
+        //return (CommitMessage) e.getData(VcsDataKeys.COMMIT_MESSAGE_CONTROL);
     }
 }
