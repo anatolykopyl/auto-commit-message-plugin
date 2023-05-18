@@ -47,6 +47,5 @@ public class CreateCommitAction extends AnAction {
             return (CommitMessageI) data;
         }
         return VcsDataKeys.COMMIT_MESSAGE_CONTROL.getData(e.getDataContext());
-        //return (CommitMessage) e.getData(VcsDataKeys.COMMIT_MESSAGE_CONTROL);
     }
 }
