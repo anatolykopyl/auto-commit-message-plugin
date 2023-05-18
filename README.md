@@ -24,9 +24,6 @@ Install directly from the IDE plugin manager (File > Settings > Plugins > Browse
 
 ![Commit-step3](static/commit-template-3.png)
 
-## Partner
-
-<img src="static/lm.jpg" alias="Leroy Merlin" width="120" height="120">
 
 ## License
 
@@ -41,3 +38,11 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+
+## Original Work
+
+This plugin is based off the [Git Commit Template](https://github.com/MobileTribe/commit-template-idea-plugin) plugin.
+
+### Changes made:
+
+* Refactored to use standard Gradle project structure

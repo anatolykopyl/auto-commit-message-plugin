@@ -1,24 +1,28 @@
 package com.leroymerlin.commit;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.WordUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.text.WordUtils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.apache.commons.lang.StringUtils.isNotBlank;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 /**
  * @author Damien Arrachequesne <damien.arrachequesne@gmail.com>
  */
-class CommitMessage {
+public class CommitMessage {
     private static final int MAX_LINE_LENGTH = 72; // https://stackoverflow.com/a/2120040/5138796
 
     public static final Pattern COMMIT_FIRST_LINE_FORMAT = Pattern.compile("^([a-z]+)(\\((.+)\\))?: (.+)");
     public static final Pattern COMMIT_CLOSES_FORMAT = Pattern.compile("Closes (.+)");
 
-    private ChangeType changeType;
-    private String changeScope, shortDescription, longDescription, breakingChanges, closedIssues;
+    private ChangeType changeType = ChangeType.FIX;
+    private String changeScope = "";
+    private String shortDescription = "";
+    private String longDescription = "";
+    private String breakingChanges = "";
+    private String closedIssues = "";
     private boolean wrapText = true;
     private boolean skipCI = false;
 
@@ -44,6 +48,7 @@ class CommitMessage {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append(changeType.label());
+
         if (isNotBlank(changeScope)) {
             builder
                     .append('(')

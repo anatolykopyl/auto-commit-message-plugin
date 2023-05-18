@@ -35,8 +35,10 @@ public class CommitPanel {
         File workingDirectory = new File(project.getBasePath());
         GitLogQuery.Result result = new GitLogQuery(workingDirectory).execute();
         if (result.isSuccess()) {
-            changeScope.addItem(""); // no value by default
-            result.getScopes().forEach(changeScope::addItem);
+            if (changeScope != null) {
+                changeScope.addItem(""); // no value by default
+                result.getScopes().forEach(changeScope::addItem);
+            }
         }
 
         if (commitMessage != null) {

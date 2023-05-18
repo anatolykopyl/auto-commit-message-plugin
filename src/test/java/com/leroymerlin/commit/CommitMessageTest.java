@@ -1,5 +1,7 @@
 package com.leroymerlin.commit;
 
+import com.leroymerlin.commit.ChangeType;
+import com.leroymerlin.commit.CommitMessage;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -8,10 +10,12 @@ public class CommitMessageTest {
 
     @Test
     public void testFormatCommit() {
-        CommitMessage commitMessage = new CommitMessage(ChangeType.FIX, "ngStyle",
+        CommitMessage commitMessage = new CommitMessage(
+                ChangeType.FIX, "ngStyle",
                 "skip setting empty value when new style has the property",
                 "Previously, all the properties in oldStyles are set to empty value once. Using AngularJS with jQuery 3.3.1, this disables the CSS transition as reported in jquery/jquery#4185.",
-                null, "#16709", true, false);
+                null, "#16709", true, false
+        );
         String expected = "fix(ngStyle): skip setting empty value when new style has the property\n" +
                 "\n" +
                 "Previously, all the properties in oldStyles are set to empty value once.\n" +
