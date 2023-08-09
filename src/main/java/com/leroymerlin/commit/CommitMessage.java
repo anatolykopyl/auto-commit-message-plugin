@@ -1,7 +1,7 @@
 package com.leroymerlin.commit;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.text.WordUtils;
+import org.apache.commons.text.WordUtils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -36,6 +36,13 @@ public class CommitMessage {
     }
 
     public CommitMessage(ChangeType changeType, String changeScope, String shortDescription, String longDescription,
+                         String breakingChanges, String closedIssues, boolean wrapText, boolean skipCI
+    ) {
+        this(changeType, changeScope, shortDescription, longDescription,
+             breakingChanges, closedIssues, wrapText, skipCI, JiraIdMode.NONE, "");
+    }
+
+    public CommitMessage(ChangeType changeType, String changeScope, String shortDescription, String longDescription,
                          String breakingChanges, String closedIssues, boolean wrapText, boolean skipCI,
                          JiraIdMode jiraIdMode, String jiraId
     ) {
@@ -57,52 +64,39 @@ public class CommitMessage {
         builder.append(changeType.label());
 
         if (isNotBlank(changeScope)) {
-            builder
-                    .append('(')
-                    .append(changeScope)
-                    .append(')');
+            builder.append('(').append(changeScope).append(')');
         }
-        builder
-                .append(": ")
-                .append(shortDescription);
+        builder.append(": ").append(shortDescription);
 
+        final String lineSeparator = "\n";
         if (isNotBlank(longDescription)) {
-            builder
-                    .append(System.lineSeparator())
-                    .append(System.lineSeparator())
-                    .append(wrapText ? WordUtils.wrap(longDescription, MAX_LINE_LENGTH) : longDescription);
+            builder.append(lineSeparator.repeat(2))
+                    .append(wrapText ? WordUtils.wrap(longDescription, MAX_LINE_LENGTH, "\n", true) : longDescription);
         }
 
         if (isNotBlank(breakingChanges)) {
             String content = "BREAKING CHANGE: " + breakingChanges;
-            builder
-                    .append(System.lineSeparator())
-                    .append(System.lineSeparator())
-                    .append(wrapText ? WordUtils.wrap(content, MAX_LINE_LENGTH) : content);
+            builder.append(lineSeparator.repeat(2))
+                    .append(wrapText ? WordUtils.wrap(content, MAX_LINE_LENGTH, "\n", true) : content);
         }
 
         if (isNotBlank(closedIssues)) {
-            builder.append(System.lineSeparator());
+            builder.append(lineSeparator);
             for (String closedIssue : closedIssues.split(",")) {
-                builder
-                        .append(System.lineSeparator())
+                builder.append(lineSeparator)
                         .append("Closes ")
                         .append(formatClosedIssue(closedIssue));
             }
         }
 
         if (skipCI) {
-            builder
-                    .append(System.lineSeparator())
-                    .append(System.lineSeparator())
+            builder.append(lineSeparator.repeat(2))
                     .append("[skip ci]");
         }
 
         if (isNotBlank(jiraId)) {
             String jiraIdText = formatJiraIds(jiraId);
-            builder
-                    .append(System.lineSeparator())
-                    .append(System.lineSeparator())
+            builder.append(lineSeparator.repeat(2))
                     .append(jiraIdText);
         }
 

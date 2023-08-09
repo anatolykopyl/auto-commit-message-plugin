@@ -1,7 +1,5 @@
 package com.leroymerlin.commit;
 
-import com.leroymerlin.commit.ChangeType;
-import com.leroymerlin.commit.CommitMessage;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -69,7 +67,9 @@ public class CommitMessageTest {
     @Test
     public void testParseCommit_invalidFormat() {
         CommitMessage commitMessage = CommitMessage.parse("lorem ipsum");
-        assertEquals(null, commitMessage.getChangeType());
+        assertEquals(ChangeType.FEAT, commitMessage.getChangeType());
+        assertEquals("", commitMessage.getShortDescription());
+		assertEquals("", commitMessage.getLongDescription());
     }
 
     @Test
