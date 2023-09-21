@@ -4,13 +4,11 @@
 This plugin allows to create a commit message with the following template:
 
 ```
-<type>(<scope>): <subject>
+<type>(<scope>): <subject> <jira id>
 <BLANK LINE>
 <body>
 <BLANK LINE>
 <footer>
-<BLANK LINE>
-<jira id>
 ```
 
 <!-- Plugin description end -->

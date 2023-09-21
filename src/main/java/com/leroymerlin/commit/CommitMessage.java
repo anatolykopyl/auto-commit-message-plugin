@@ -68,6 +68,11 @@ public class CommitMessage {
         }
         builder.append(": ").append(shortDescription);
 
+        if (isNotBlank(jiraId)) {
+            String jiraIdText = formatJiraIds(jiraId);
+            builder.append(' ').append(jiraIdText);
+        }
+
         final String lineSeparator = "\n";
         if (isNotBlank(longDescription)) {
             builder.append(lineSeparator.repeat(2))
@@ -92,12 +97,6 @@ public class CommitMessage {
         if (skipCI) {
             builder.append(lineSeparator.repeat(2))
                     .append("[skip ci]");
-        }
-
-        if (isNotBlank(jiraId)) {
-            String jiraIdText = formatJiraIds(jiraId);
-            builder.append(lineSeparator.repeat(2))
-                    .append(jiraIdText);
         }
 
         return builder.toString();

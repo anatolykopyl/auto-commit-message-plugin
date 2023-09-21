@@ -33,10 +33,7 @@ public class CommitPanel {
     private JRadioButton refactorRadioButton;
     private JRadioButton perfRadioButton;
     private JRadioButton testRadioButton;
-    private JRadioButton buildRadioButton;
-    private JRadioButton ciRadioButton;
     private JRadioButton choreRadioButton;
-    private JRadioButton revertRadioButton;
     private JComboBox<JiraIdMode> jiraIdModeCombobox;
     private JTextField jiraIdTextField;
     private ButtonGroup changeTypeGroup;
