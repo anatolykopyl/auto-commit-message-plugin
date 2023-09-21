@@ -1,1 +1,1 @@
-rootProject.name = "commit-template-with-jira-id"
+rootProject.name = "commit-template"
