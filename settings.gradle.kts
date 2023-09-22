@@ -1,1 +1,1 @@
-rootProject.name = "commit-template"
+rootProject.name = "Auto commit message"
