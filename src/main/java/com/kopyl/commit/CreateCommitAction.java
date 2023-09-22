@@ -1,9 +1,12 @@
 package com.kopyl.commit;
 
+import com.intellij.dvcs.repo.RepositoryManager;
+import com.intellij.openapi.project.Project;
+import git4idea.GitLocalBranch;
+import git4idea.GitUtil;
+import git4idea.repo.GitRepository;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.ui.DialogWrapper;
-import com.intellij.openapi.vcs.CheckinProjectPanel;
 import com.intellij.openapi.vcs.CommitMessageI;
 import com.intellij.openapi.vcs.VcsDataKeys;
 import com.intellij.openapi.vcs.ui.Refreshable;
@@ -11,9 +14,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import com.atlassian.jira.rest.client.api.domain.Issue;
 
-/**
- * @author Damien Arrachequesne
- */
 public class CreateCommitAction extends AnAction {
 
     @Override
@@ -21,26 +21,14 @@ public class CreateCommitAction extends AnAction {
         CommitMessageI commitPanel = getCommitPanel(actionEvent);
         if (commitPanel == null) return;
 
-        JiraClient jiraClient = new JiraClient("token", "url");
-        Issue issue = jiraClient.getIssue("key");
+        String jiraId = getJiraIdFromBranchName(actionEvent.getProject());
 
-        commitPanel.setCommitMessage(issue.getSummary());
+        JiraClient jiraClient = new JiraClient("key", "url");
+        Issue issue = jiraClient.getIssue(jiraId);
 
-//        CommitMessage commitMessage = parseExistingCommitMessage(commitPanel);
-//        CommitDialog dialog = new CommitDialog(actionEvent.getProject(), commitMessage);
-//        dialog.show();
-//
-//        if (dialog.getExitCode() == DialogWrapper.OK_EXIT_CODE) {
-//            commitPanel.setCommitMessage(dialog.getCommitMessage().toString());
-//        }
-    }
+        CommitMessage commitMessage = new CommitMessage(issue);
 
-    private CommitMessage parseExistingCommitMessage(CommitMessageI commitPanel) {
-        if (commitPanel instanceof CheckinProjectPanel) {
-            String commitMessageString = ((CheckinProjectPanel) commitPanel).getCommitMessage();
-            return CommitMessage.parse(commitMessageString);
-        }
-        return null;
+        commitPanel.setCommitMessage(commitMessage.toString());
     }
 
     @Nullable
@@ -53,5 +41,14 @@ public class CreateCommitAction extends AnAction {
             return (CommitMessageI) data;
         }
         return VcsDataKeys.COMMIT_MESSAGE_CONTROL.getData(e.getDataContext());
+    }
+
+    private String getJiraIdFromBranchName(Project project) {
+        RepositoryManager<GitRepository> repositoryManager = GitUtil.getRepositoryManager(project);
+        GitLocalBranch branch = repositoryManager.getRepositories().get(0).getCurrentBranch();
+
+        if (branch == null) return "";
+
+        return branch.getName();
     }
 }

@@ -7,15 +7,7 @@
     <vendor email="hi@kopyl.dev">Anatoly Kopyl</vendor>
 
     <description><![CDATA[
-        <p>Create a commit message with the following template:</p>
-
-        <pre>
-        &lt;type&gt;(&lt;scope&gt;): &lt;subject&gt; jira-id
-        &lt;BLANK LINE&gt;
-        &lt;body&gt;
-        &lt;BLANK LINE&gt;
-        &lt;footer&gt;
-        </pre>
+        <p>Create a commit message from Jira using the branch name.</p>
     ]]></description>
 
     <idea-version since-build="145.0"/>

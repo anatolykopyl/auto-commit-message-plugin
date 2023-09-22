@@ -12,10 +12,10 @@ public enum ChangeType {
     REFACTOR("Code Refactoring", "A code change that neither fixes a bug nor adds a feature"),
     PERF("Performance Improvements", "A code change that improves performance"),
     TEST("Tests", "Adding missing tests or correcting existing tests"),
-//    BUILD("Builds", "Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)"),
-//    CI("Continuous Integrations", "Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)"),
-    CHORE("Chores", "Other changes that don't modify src or test files");
-//    REVERT("Reverts", "Reverts a previous commit");
+    BUILD("Builds", "Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)"),
+    CI("Continuous Integrations", "Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)"),
+    CHORE("Chores", "Other changes that don't modify src or test files"),
+    REVERT("Reverts", "Reverts a previous commit");
 
     public final String title;
     public final String description;
