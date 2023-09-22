@@ -34,7 +34,7 @@
         <action id="Commit.Button" class="com.kopyl.commit.CreateCommitAction"
                 text="Create Commit Message"
                 description="Create commit message"
-                icon="/icons/load.png">
+                icon="/icons/generate.png">
             <add-to-group group-id="Vcs.MessageActionGroup" anchor="first"/>
         </action>
     </actions>
