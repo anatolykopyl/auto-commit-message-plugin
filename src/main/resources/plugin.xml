@@ -1,5 +1,5 @@
 <idea-plugin>
-    <id>kopyl.commit-template</id>
+    <id>com.kopyl.commit</id>
     <name>Commit template</name>
     <vendor>Anatoly Kopyl</vendor>
     <depends>com.intellij.modules.platform</depends>

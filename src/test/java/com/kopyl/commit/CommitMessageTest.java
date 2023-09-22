@@ -1,4 +1,4 @@
-package com.leroymerlin.commit;
+package com.kopyl.commit;
 
 import org.junit.Test;
 

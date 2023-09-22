@@ -1,4 +1,4 @@
-package com.leroymerlin.commit;
+package com.kopyl.commit;
 
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -9,6 +9,7 @@ import com.intellij.openapi.vcs.VcsDataKeys;
 import com.intellij.openapi.vcs.ui.Refreshable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import com.atlassian.jira.rest.client.api.domain.Issue;
 
 /**
  * @author Damien Arrachequesne
@@ -20,13 +21,18 @@ public class CreateCommitAction extends AnAction {
         CommitMessageI commitPanel = getCommitPanel(actionEvent);
         if (commitPanel == null) return;
 
-        CommitMessage commitMessage = parseExistingCommitMessage(commitPanel);
-        CommitDialog dialog = new CommitDialog(actionEvent.getProject(), commitMessage);
-        dialog.show();
+        JiraClient jiraClient = new JiraClient("token", "url");
+        Issue issue = jiraClient.getIssue("key");
 
-        if (dialog.getExitCode() == DialogWrapper.OK_EXIT_CODE) {
-            commitPanel.setCommitMessage(dialog.getCommitMessage().toString());
-        }
+        commitPanel.setCommitMessage(issue.getSummary());
+
+//        CommitMessage commitMessage = parseExistingCommitMessage(commitPanel);
+//        CommitDialog dialog = new CommitDialog(actionEvent.getProject(), commitMessage);
+//        dialog.show();
+//
+//        if (dialog.getExitCode() == DialogWrapper.OK_EXIT_CODE) {
+//            commitPanel.setCommitMessage(dialog.getCommitMessage().toString());
+//        }
     }
 
     private CommitMessage parseExistingCommitMessage(CommitMessageI commitPanel) {

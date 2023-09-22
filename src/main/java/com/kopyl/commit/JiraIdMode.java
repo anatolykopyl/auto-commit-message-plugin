@@ -1,4 +1,4 @@
-package com.leroymerlin.commit;
+package com.kopyl.commit;
 
 public enum JiraIdMode {
 	NONE("None"),

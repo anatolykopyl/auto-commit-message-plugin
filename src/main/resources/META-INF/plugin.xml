@@ -1,16 +1,16 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.crmuk.avahwhitehead.commit-template-idea-plugin</id>
-    <name>Commit Template With Jira Id</name>
+    <id>com.kopyl.commit</id>
+    <name>Commit Template</name>
     <version>1.3.0</version>
 
-    <vendor email="avah.whitehead@crm-uk.com">Avah Whitehead</vendor>
+    <vendor email="hi@kopyl.dev">Anatoly Kopyl</vendor>
 
     <description><![CDATA[
         <p>Create a commit message with the following template:</p>
 
         <pre>
-        &lt;type&gt;(&lt;scope&gt;): &lt;subject&gt;
+        &lt;type&gt;(&lt;scope&gt;): &lt;subject&gt; jira-id
         &lt;BLANK LINE&gt;
         &lt;body&gt;
         &lt;BLANK LINE&gt;
@@ -33,7 +33,7 @@
     <resource-bundle>messages.MyBundle</resource-bundle>
 
     <actions>
-        <action id="Commit.Button" class="com.leroymerlin.commit.CreateCommitAction"
+        <action id="Commit.Button" class="com.kopyl.commit.CreateCommitAction"
                 text="Create Commit Message"
                 description="Create commit message"
                 icon="/icons/load.png">

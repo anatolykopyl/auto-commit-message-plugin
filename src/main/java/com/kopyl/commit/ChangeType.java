@@ -1,4 +1,4 @@
-package com.leroymerlin.commit;
+package com.kopyl.commit;
 
 /**
  * From https://confluence.selectel.org/display/SITE/Conventional+commits

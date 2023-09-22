@@ -1,4 +1,4 @@
-package com.leroymerlin.commit;
+package com.kopyl.commit;
 
 import com.intellij.dvcs.repo.RepositoryManager;
 import com.intellij.openapi.project.Project;

@@ -1,4 +1,4 @@
-package com.leroymerlin.commit;
+package com.kopyl.commit;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.WordUtils;
@@ -69,8 +69,7 @@ public class CommitMessage {
         builder.append(": ").append(shortDescription);
 
         if (isNotBlank(jiraId)) {
-            String jiraIdText = formatJiraIds(jiraId);
-            builder.append(' ').append(jiraIdText);
+            builder.append(' ').append(jiraId);
         }
 
         final String lineSeparator = "\n";
@@ -100,17 +99,6 @@ public class CommitMessage {
         }
 
         return builder.toString();
-    }
-
-    private String formatJiraIds(String jiraId) {
-        String[] ids = jiraId.split("[\\s,]+");
-        for (int i = 0; i < ids.length; i++) {
-            String idText = ids[i];
-            if (!idText.startsWith("[") || !idText.endsWith("]")) {
-                ids[i] = '[' + idText + ']';
-            }
-        }
-        return String.join(" ", ids);
     }
 
     private String formatClosedIssue(String closedIssue) {

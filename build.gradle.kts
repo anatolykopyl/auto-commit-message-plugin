@@ -17,12 +17,21 @@ version = properties("pluginVersion").get()
 // Configure project's dependencies
 repositories {
     mavenCentral()
+    maven {
+        url = uri("https://packages.atlassian.com/maven/repository/public")
+    }
 }
 
 // Dependencies are managed with Gradle version catalog - read more: https://docs.gradle.org/current/userguide/platforms.html#sub:version-catalog
 dependencies {
 //    implementation(libs.annotations)
     implementation("org.apache.commons:commons-text:1.10.0")
+    implementation("com.atlassian.jira:jira-rest-java-client-core:5.2.4"){
+        exclude(group = "org.slf4j", module = "slf4j-api")
+    }
+    implementation("io.atlassian.fugue:fugue:5.0.0") {
+        exclude(group = "org.slf4j", module = "slf4j-api")
+    }
 }
 
 // Set the JVM language level used to build the project. Use Java 11 for 2020.3+, and Java 17 for 2022.2+.
