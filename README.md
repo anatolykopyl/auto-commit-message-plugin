@@ -1,8 +1,18 @@
 # Auto commit message Plugin for IntelliJ
 
 <!-- Plugin description -->
-This plugin allows to create a conventional commit message automatically using 
+This plugin assumes that your branch name is a Jira task ID. 
+
+It adds a button to create a conventional commit message automatically using 
 the branch name and connecting to the Jira api.
+
+The commit message is using the Selectel conventional commit flavour: 
+<pre>type(component_from_Jira): subject TASK_ID</pre>
+
+For example:
+<pre>feat(common): Did some stuff TASK-123</pre>
+
+Configure the plugin in <b>Settings > Tools > Auto Commit Message</b>.
 
 <!-- Plugin description end -->
 
