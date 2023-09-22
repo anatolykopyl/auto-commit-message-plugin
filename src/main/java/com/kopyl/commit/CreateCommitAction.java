@@ -2,6 +2,7 @@ package com.kopyl.commit;
 
 import com.intellij.dvcs.repo.RepositoryManager;
 import com.intellij.openapi.project.Project;
+import com.kopyl.commit.configuration.AppSettingsState;
 import git4idea.GitLocalBranch;
 import git4idea.GitUtil;
 import git4idea.repo.GitRepository;
@@ -23,7 +24,10 @@ public class CreateCommitAction extends AnAction {
 
         String jiraId = getJiraIdFromBranchName(actionEvent.getProject());
 
-        JiraClient jiraClient = new JiraClient("key", "url");
+        String personalAccessToken = AppSettingsState.getInstance().personalAccessToken;
+        String jiraUrl = AppSettingsState.getInstance().jiraUrl;
+
+        JiraClient jiraClient = new JiraClient(personalAccessToken, jiraUrl);
         Issue issue = jiraClient.getIssue(jiraId);
 
         CommitMessage commitMessage = new CommitMessage(issue);

@@ -1,15 +1,8 @@
-# Git commit template Plugin for IntelliJ
+# Auto commit message Plugin for IntelliJ
 
 <!-- Plugin description -->
-This plugin allows to create a commit message with the following template:
-
-```
-<type>(<scope>): <subject> <jira id>
-<BLANK LINE>
-<body>
-<BLANK LINE>
-<footer>
-```
+This plugin allows to create a conventional commit message automatically using 
+the branch name and connecting to the Jira api.
 
 <!-- Plugin description end -->
 
