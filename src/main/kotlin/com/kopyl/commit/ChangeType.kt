@@ -1,10 +1,11 @@
-package com.kopyl.commit;
+package com.kopyl.commit
+
+import java.util.*
 
 /**
  * From https://confluence.selectel.org/display/SITE/Conventional+commits
  */
-public enum ChangeType {
-
+enum class ChangeType(val title: String, private val description: String) {
     FEAT("Features", "A new feature"),
     FIX("Bug Fixes", "A bug fix"),
     DOCS("Documentation", "Documentation only changes"),
@@ -17,20 +18,11 @@ public enum ChangeType {
     CHORE("Chores", "Other changes that don't modify src or test files"),
     REVERT("Reverts", "Reverts a previous commit");
 
-    public final String title;
-    public final String description;
-
-    ChangeType(String title, String description) {
-        this.title = title;
-        this.description = description;
+    fun label(): String {
+        return name.lowercase(Locale.getDefault())
     }
 
-    public String label() {
-        return this.name().toLowerCase();
-    }
-
-    @Override
-    public String toString() {
-        return String.format("%s - %s", this.label(), this.description);
+    override fun toString(): String {
+        return String.format("%s - %s", label(), description)
     }
 }
