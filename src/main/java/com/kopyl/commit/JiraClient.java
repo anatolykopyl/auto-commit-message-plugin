@@ -4,8 +4,8 @@ import com.atlassian.jira.rest.client.api.JiraRestClientFactory;
 import com.atlassian.jira.rest.client.api.JiraRestClient;
 import com.atlassian.jira.rest.client.api.domain.Issue;
 import com.atlassian.jira.rest.client.internal.async.AsynchronousJiraRestClientFactory;
-import java.net.URI;
 
+import java.net.URI;
 
 public class JiraClient {
     private final String token;
@@ -30,7 +30,7 @@ public class JiraClient {
 
     public Issue getIssue(String issueKey) {
         return restClient.getIssueClient()
-                .getIssue(issueKey)
-                .claim();
+            .getIssue(issueKey)
+            .claim();
     }
 }

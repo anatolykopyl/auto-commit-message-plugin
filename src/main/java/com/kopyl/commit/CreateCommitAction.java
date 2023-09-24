@@ -1,5 +1,6 @@
 package com.kopyl.commit;
 
+import com.atlassian.jira.rest.client.api.domain.Issue;
 import com.intellij.dvcs.repo.RepositoryManager;
 import com.intellij.openapi.project.Project;
 import com.kopyl.commit.configuration.AppSettingsState;
@@ -13,7 +14,8 @@ import com.intellij.openapi.vcs.VcsDataKeys;
 import com.intellij.openapi.vcs.ui.Refreshable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import com.atlassian.jira.rest.client.api.domain.Issue;
+
+import java.util.Objects;
 
 public class CreateCommitAction extends AnAction {
 
@@ -22,17 +24,35 @@ public class CreateCommitAction extends AnAction {
         CommitMessageI commitPanel = getCommitPanel(actionEvent);
         if (commitPanel == null) return;
 
-        String jiraId = getJiraIdFromBranchName(actionEvent.getProject());
-
         String personalAccessToken = AppSettingsState.getInstance().personalAccessToken;
         String jiraUrl = AppSettingsState.getInstance().jiraUrl;
 
+        if (Objects.equals(jiraUrl, "") || Objects.equals(personalAccessToken, "")) {
+            String errorMessage = "Provide a Jira URL and personal access token in the Settings.";
+            ErrorNotification.show(errorMessage);
+            return;
+        }
+
         JiraClient jiraClient = new JiraClient(personalAccessToken, jiraUrl);
-        Issue issue = jiraClient.getIssue(jiraId);
 
-        CommitMessage commitMessage = new CommitMessage(issue);
+        try {
+            String jiraId = getJiraIdFromBranchName(actionEvent.getProject());
+            Issue issue = jiraClient.getIssue(jiraId);
 
-        commitPanel.setCommitMessage(commitMessage.toString());
+            IssueValidator issueValidator = new IssueValidator(issue);
+            if (!issueValidator.valid()) {
+                String errorMessage = String.format("Issue %s is not valid", jiraId);
+                ErrorNotification.show(errorMessage);
+                return;
+            }
+
+            CommitMessage commitMessage = new CommitMessage(issue);
+
+            commitPanel.setCommitMessage(commitMessage.toString());
+        } catch (Exception e) {
+            String errorMessage = String.format("Could not connect to Jira. Check if %s is available and the access token is valid.", jiraUrl);
+            ErrorNotification.show(errorMessage);
+        }
     }
 
     @Nullable
