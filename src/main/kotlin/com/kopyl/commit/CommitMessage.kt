@@ -5,9 +5,9 @@ import org.apache.commons.lang3.StringUtils
 
 class CommitMessage(issue: Issue) {
     private var changeType = ChangeType.FEAT
-    private var changeScope = ""
-    private var shortDescription = ""
-    private var jiraId: String? = null
+    private var changeScope: String?
+    private var shortDescription: String?
+    private var jiraId: String?
 
     init {
         if (issue.issueType.name == "Bug") {

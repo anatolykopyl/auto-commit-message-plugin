@@ -1,6 +1,5 @@
 package com.kopyl.commit
 
-import com.intellij.dvcs.repo.RepositoryManager
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.project.Project
@@ -9,7 +8,6 @@ import com.intellij.openapi.vcs.VcsDataKeys
 import com.intellij.openapi.vcs.ui.Refreshable
 import com.kopyl.commit.configuration.AppSettingsState.Companion.instance
 import git4idea.GitUtil
-import git4idea.repo.GitRepository
 
 class CreateCommitAction : AnAction() {
     override fun actionPerformed(actionEvent: AnActionEvent) {
@@ -17,7 +15,7 @@ class CreateCommitAction : AnAction() {
 
         val personalAccessToken = instance.personalAccessToken
         val jiraUrl = instance.jiraUrl
-        if (jiraUrl == "" || personalAccessToken == "") {
+        if (jiraUrl.isEmpty() || personalAccessToken.isEmpty()) {
             val errorMessage = "Provide a Jira URL and personal access token in the Settings."
             ErrorNotification.show(errorMessage)
             return

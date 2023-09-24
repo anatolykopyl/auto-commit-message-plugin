@@ -2,7 +2,7 @@
 <idea-plugin>
     <id>com.kopyl.commit</id>
     <name>Auto commit message</name>
-    <version>0.2.0</version>
+    <version>0.2.1</version>
 
     <vendor email="hi@kopyl.dev">Anatoly Kopyl</vendor>
 

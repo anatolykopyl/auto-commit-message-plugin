@@ -24,7 +24,7 @@ class JiraClient(private val token: String, private val jiraUrl: String) {
 
     fun getIssue(issueKey: String?): Issue {
         return restClient.issueClient
-                .getIssue(issueKey)
-                .claim()
+            .getIssue(issueKey)
+            .claim()
     }
 }
