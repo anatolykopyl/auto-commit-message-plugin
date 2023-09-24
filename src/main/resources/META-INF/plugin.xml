@@ -2,7 +2,7 @@
 <idea-plugin>
     <id>com.kopyl.commit</id>
     <name>Auto commit message</name>
-    <version>0.1.0</version>
+    <version>0.1.2</version>
 
     <vendor email="hi@kopyl.dev">Anatoly Kopyl</vendor>
 
@@ -10,7 +10,7 @@
         <p>Create a commit message from Jira using the branch name.</p>
     ]]></description>
 
-    <idea-version since-build="212.4746.92"/>
+    <idea-version since-build="222"/>
 
     <depends>com.intellij.modules.vcs</depends>
 
@@ -34,7 +34,7 @@
         <action id="Commit.Button" class="com.kopyl.commit.CreateCommitAction"
                 text="Create Commit Message"
                 description="Create commit message"
-                icon="/icons/generate.png">
+                icon="/icons/generate.svg">
             <add-to-group group-id="Vcs.MessageActionGroup" anchor="first"/>
         </action>
     </actions>
