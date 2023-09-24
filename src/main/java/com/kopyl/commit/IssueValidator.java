@@ -10,6 +10,7 @@ public class IssueValidator {
     }
 
     public Boolean valid() {
+        // TODO return error message as well, eg: {valid: false, message: "Components missing"}
         if (this.issue.getSummary() == null || this.issue.getSummary().isEmpty()) {
             return false;
         }

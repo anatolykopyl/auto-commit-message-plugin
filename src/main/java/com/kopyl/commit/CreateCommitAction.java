@@ -50,7 +50,7 @@ public class CreateCommitAction extends AnAction {
 
             commitPanel.setCommitMessage(commitMessage.toString());
         } catch (Exception e) {
-            String errorMessage = String.format("Could not connect to Jira. Check if %s is available and the access token is valid.", jiraUrl);
+            String errorMessage = String.format("Could not connect to Jira or issue does not exist. Check if %s is available and the access token is valid.", jiraUrl);
             ErrorNotification.show(errorMessage);
         }
     }
