@@ -8,7 +8,7 @@ class IssueValidator(private val issue: Issue) {
         if (issue.summary == null || issue.summary.isEmpty()) {
             return false
         }
-        if (issue.components == null || issue.components.iterator().next() == null) {
+        if (issue.components == null || !issue.components.iterator().hasNext()) {
             return false
         }
 

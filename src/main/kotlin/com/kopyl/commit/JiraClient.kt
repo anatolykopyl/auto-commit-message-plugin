@@ -14,13 +14,13 @@ class JiraClient(private val token: String, private val jiraUrl: String) {
     }
 
     private val jiraRestClient: JiraRestClient
-        private get() {
+        get() {
             val handler = BearerHttpAuthenticationHandler(token)
             val factory: JiraRestClientFactory = AsynchronousJiraRestClientFactory()
             return factory.create(jiraUri, handler)
         }
     private val jiraUri: URI
-        private get() = URI.create(jiraUrl)
+        get() = URI.create(jiraUrl)
 
     fun getIssue(issueKey: String?): Issue {
         return restClient.issueClient
